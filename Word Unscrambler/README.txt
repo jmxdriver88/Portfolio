@@ -2,8 +2,6 @@ ABSTRACT: Word Unscrambler is a program I wrote that searches a modest dictionar
 
 REQUIREMENTS: This program requires the use of a PHP server.
 
-DISCLAIMER: I wrote this program on an older version of PHP than what is current, so while it ought to work correctly, I reserve the right to make no guarantees about its reliability.
-
 STARTING FILE: 'index.php'
 
 USE: Use of the program is simple. Simply type in a scrambled word, that you wish to unscramble, into the input field and click Unscramble. The program will return all matches to be found in its dictionary. For convenience, you may also scramble a word by checking the Scramble radio button.
