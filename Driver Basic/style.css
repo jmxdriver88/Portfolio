@@ -1,0 +1,191 @@
+body {
+	margin: 25;
+	padding: 0;
+	font: normal normal 1em "Century Gothic", Verdana, Arial, Sans-serif;
+}
+
+h2 {
+	color: Gray;
+	font: bold normal 2.5em "Century Gothic", Verdana, Arial, Sans-serif;
+	margin-bottom: 15;	
+	padding: 0;
+}
+
+b.red {
+	color: red;
+}
+
+.main h2 {
+	font-weight: normal;
+	display: block;
+	width: 16em;
+	margin: 0;
+}
+
+.main span {
+	font: normal normal 2.5em "Century Gothic", Verdana, Arial, Sans-serif;;
+	display: block;
+	width: 16em;
+	border-top: 1px Solid Red;
+	margin-top: -.1em;
+}
+
+p.first {
+	margin-top: -2em;
+}
+
+li, a {
+	color: black;
+	font: normal normal 1em "Century Gothic", Verdana, Arial, Sans-serif;
+	margin: 0;	
+	padding: 0;
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+	text-decoration: none;
+}
+
+a:active {
+	color: red;
+	text-decoration: underline;
+}
+
+a:visited {
+	color: #ff6600;
+}
+
+table {
+	margin: 15px auto 15px auto;
+	border-collapse: collapse;
+}
+
+.end {
+	background: #ee7700;
+	font: normal normal 20pt "Century Gothic", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	margin: 0px;
+	padding: 10px;
+	text-align: left;
+	color: Black;
+}
+
+tr {
+	background: #ff9900;
+	font: 11pt "Century Gothic", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	text-align: left;
+	color: Black;
+}
+
+tr td {
+	padding: 3px 10px 3px 10px;
+	border: 1px solid Black;
+}
+
+tr:hover {
+	background-color: #ffbb00;
+}
+
+td a {
+	color: Black;
+	text-decoration: underline;
+}
+
+td a:hover {
+	color: Black;
+	text-decoration: none;
+}
+
+td a:visited {
+	color: Black;
+	text-decoration: underline;
+}
+
+.error {
+	font: 12pt "Century Gothic", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	color: Black;
+}
+
+.error b {
+	color: Red;
+}
+
+.nav {
+	background: #ff9900;
+	display: block;
+	border-right: 3px solid Black;
+	float: left;
+	margin: 0;
+	padding: 10px 10px 10px 10px;
+	position: static;
+	width: 15em;
+}
+
+.main {
+	display: block;
+	position: absolute;
+	font: normal normal 1em "Century Gothic", Verdana, Arial, Sans-serif;
+	width: 40em;
+	left: 16.5em;
+	top: 0;
+	margin: 0;
+	padding: 1em;
+}
+
+.nav_links li a {
+	color: Black;
+	font: 100 normal 10pt "Century Gothic", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+}
+
+.nav_links li a:visited {
+	color: Black;
+	font: 100 normal 10pt "Century Gothic", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+}
+
+.nav_links li {
+	color: Black;
+	font: 12pt "Century Gothic", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	list-style: none;
+}
+
+.nav_links {
+	padding: 0;
+	margin: 0;
+}
+
+pre {
+	margin: 20px 0 20px 0 ;
+	color: Black;
+}
+
+pre b.command {
+	color: Red;
+	font-weight: normal;
+}
+
+pre b.var {
+	color: Blue;
+	font-weight: normal;
+}
+
+pre b.output {
+	color: Green;
+	font-weight: normal;
+}
+
+p.link {
+	width: 100%;
+	text-align: right;
+}
+
+p.link a {
+	padding: 10px;
+	color: red;
+	text-decoration: underline;
+}
+
+.box {
+	padding: 20px;
+	margin: 10px, 0, 10px, 0;
+	border: 1px Dashed Red;
+}

@@ -1,0 +1,283 @@
+<html>
+
+<head>
+<title>Electrostatic Particle Motion - Physics</title>
+
+<script type="text/javascript" language="JavaScript">
+
+var currentlyRunning = false;
+var frameRate = 10;
+var frameRateInSec = frameRate / 1000;
+var count;
+
+var particle = [];
+particle[0] = [ true, -.002, 200, 200, true, 0, 0 ];
+particle[1] = [ true, .0001, 200, 400, true, 0, 0 ];
+particle[2] = [ true, .0001, 500, 100, false, 0, 0 ];
+particle[3] = [ false, .001, 0, 0, false, 0, 0 ];
+particle[4] = [ true, .001, 200, 100, true, 0, 0 ];
+
+function updateParticles()
+{
+    if( currentlyRunning == false )
+    {
+        for( i = 0; i < 5; ++i )
+        {
+            particle[i][0] = document.getElementById( "pdisplay" + i ).checked;
+            particle[i][1] = Number( document.getElementById( "charge" + i ).value ) / 1000;
+
+            particle[i][2] = Number( document.getElementById( "x" + i ).value );
+            particle[i][3] = Number( document.getElementById( "y" + i ).value );
+
+            for( j = 0; j < i; ++j )
+            {
+                if( Math.pow( particle[i][2] - particle[j][2], 2 ) + Math.pow( particle[i][3] - particle[j][3], 2 ) < 26 * 26 )
+                {
+                    sign = ( particle[i][2] - particle[j][2] >= 0 ) ? 1 : -1;
+                    particle[i][2] = particle[j][2] + Math.sqrt( 26 * 26 - Math.pow( particle[j][3] - particle[i][3], 2 ) ) * sign;
+                }
+            }
+
+            particle[i][4] = document.getElementById( "fix" + i ).checked;
+
+            particle[i][5] = 0;
+            particle[i][6] = 0;
+
+            if( particle[i][0] == true )
+                document.getElementById( "particle" + i ).style.display = "block";
+
+            else
+                document.getElementById( "particle" + i ).style.display = "none";
+
+            document.getElementById( "particle" + i ).style.left = particle[i][2] - 13;
+            document.getElementById( "particle" + i ).style.top = particle[i][3] - 13;
+
+            document.getElementById( "x" + i ).value = Math.round( particle[i][2] );
+            document.getElementById( "y" + i ).value = Math.round( particle[i][3] );
+        }
+    }
+}
+
+function startParticles()
+{
+    currentlyRunning = true;
+    theMachine( 0 ); 
+}
+
+function stopParticles()
+{
+    clearTimeout( timer );
+    currentlyRunning = false;
+
+    for( i = 0; i < 5; ++i )
+    {
+        particle[i][5] = 0;
+        particle[i][6] = 0;
+    }
+}
+
+function findAngle( x, y )
+{
+    if( x == 0 && y == 0 )
+        return 0;
+
+    else if( x >= 0 && y >= 0 )
+        return Math.atan( y / x );
+
+    else if( x < 0 && y >= 0 )
+        return Math.atan( y / x ) + Math.PI;
+
+    else if( x < 0 && y < 0 )
+        return Math.atan( y / x ) + Math.PI;
+
+    else
+        return Math.atan( y / x ) + 2 * Math.PI;
+}
+
+function theMachine( count )
+{
+    var distanceX = [ 0, 0, 0, 0, 0 ];
+    var distanceY = [ 0, 0, 0, 0, 0 ];
+
+    for( i = 0; i < 5; ++i )
+    {
+        if( particle[i][0] == true && particle[i][4] == false )
+        {
+            particleDiv = document.getElementById( "particle" + i );
+
+            var Ex = 0;
+            var Ey = 0;
+
+            for( j = 0; j < 5; ++j )
+            {
+                if( i != j && particle[j][0] == true )
+                {
+                    x = ( particle[i][2] - particle[j][2] ) / 100;
+                    y = ( particle[i][3] - particle[j][3] ) / 100;
+                    radius = Math.sqrt( ( x * x ) + ( y * y ) );
+
+                    E = ( 8990000000 * particle[j][1] ) / ( radius * radius );
+                    Ex += E * ( x / radius );
+                    Ey += E * ( y / radius );
+                }
+            }
+
+            accelerationX = ( Ex * particle[i][1] ) // / .001;
+            accelerationY = ( Ey * particle[i][1] ) // / .001;
+
+            distanceX[i] = ( particle[i][5] * frameRateInSec ) + ( ( accelerationX * frameRateInSec * frameRateInSec ) / 2 );
+            distanceY[i] = ( particle[i][6] * frameRateInSec ) + ( ( accelerationY * frameRateInSec * frameRateInSec ) / 2 );
+
+            particle[i][5] += accelerationX * frameRateInSec;
+            particle[i][6] += accelerationY * frameRateInSec;
+        }
+    }
+
+    for( i = 0; i < 5; ++i )
+    {
+        changeVelocity = false;
+
+        if( particle[i][0] == true && particle[i][4] == false )
+        {
+            for( j = 0; j < 5, j != i; ++j )  
+            {
+                radius1 = Math.sqrt( ( particle[j][2] - particle[i][2] ) * ( particle[j][2] - particle[i][2] ) + ( particle[j][3] - particle[i][3] ) * ( particle[j][3] - particle[i][3] ) );
+                radius2 = Math.sqrt( distanceX[i] * distanceX[i] + distanceY[i] * distanceY[i] );
+
+                if( radius2 + 26 > radius1 )
+                {
+                    angle1 = findAngle( distanceX[i], distanceY[i] );
+                    angle2 = findAngle( ( particle[j][2] - particle[i][2] ), ( particle[j][3] - particle[i][3] ) );
+                    angle3 = 2 * Math.asin( 13 / radius1 );
+
+                    if( Math.abs( angle1 - angle2 ) < angle3 )
+                    {
+                        A = Math.abs( angle1 - angle2 );
+                        b = radius1 * Math.cos( A ) - Math.sqrt( 676 - radius1 * radius1 * Math.sin( A ) * Math.sin( A ) );
+                     // reflection = A + Math.asin( ( b * Math.sin( A ) ) / 26 );
+                     // reflection = 2 * reflection;
+
+                        X1 = b * distanceX[i] / radius2;
+                        Y1 = b * distanceY[i] / radius2;
+
+                     /* if( ( Math.abs( angle2 - angle1 ) <= Math.PI && angle2 >= angle1 ) || ( Math.abs( angle2 - angle1 ) > Math.PI && angle2 <= angle1 ) )
+                            reflection = angle1 + reflection + Math.PI;
+
+                        else if( ( Math.abs( angle2 - angle1 ) <= Math.PI && angle1 < angle2 ) || ( Math.abs( angle2 - angle1 ) > Math.PI && angle1 > angle2 ) )
+                            reflection = angle1 - reflection + Math.PI;
+
+                        else
+                            reflection = angle1 + Math.PI;
+
+                        X2 = ( radius2 - b ) * Math.cos( reflection );
+                        Y2 = ( radius2 - b ) * Math.sin( reflection );
+                     */
+                        distanceX[i] = X1;
+                        distanceY[i] = Y1;
+
+                        changeVelocity = true;
+                    }                            
+                }
+            }
+        }
+
+        particle[i][2] += distanceX[i];
+        particle[i][3] += distanceY[i];
+
+        if( changeVelocity == true )
+        {
+            particle[i][5] = 0;
+            particle[i][6] = 0;
+        }
+
+        changeVelocity = false;
+
+        document.getElementById( "particle" + i ).style.left = particle[i][2] - 13;
+        document.getElementById( "particle" + i ).style.top = particle[i][3] - 13;
+    }
+
+    var nextFunction = function(){ theMachine( ++count ); };
+
+    if( count < 100000 )
+        timer = setTimeout( nextFunction, frameRate );
+}
+
+</script>
+
+<link href="layout.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<div class="controlPanel">
+<form name="f" method="post" action="">
+
+<div id="CP0"><b><input type="checkbox" id="pdisplay0" checked="true" /> Particle 1:</b>
+<table id="CPtable0" border="0" cellspacing="3">
+<tr><td align="right">Charge:</td><td><input type="text" id="charge0" value="-2.0" size="5" /> mC</td></tr>
+<tr><td align="right">X:</td><td><input type="text" id="x0" value="200" size="5" /> m<br /></td></tr>
+<tr><td align="right">Y:</td><td><input type="text" id="y0" value="200" size="5" /> m<br /></td></tr>
+<tr><td align="right">Fixed:</td><td><input type="checkbox" id="fix0" checked="true" /></td></tr>
+</table>
+</div>
+
+<div id="CP1"><b><input type="checkbox" id="pdisplay1" checked="true" /> Particle 2:</b>
+<table id="CPtable1" border="0" cellspacing="3">
+<tr><td align="right">Charge:</td><td><input type="text" id="charge1" value="0.1" size="5" /> mC</td></tr>
+<tr><td align="right">X:</td><td><input type="text" id="x1" value="400" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Y:</td><td><input type="text" id="y1" value="200" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Fixed:</td><td><input type="checkbox" id="fix1" checked="true" /></td></tr>
+</table>
+</div>
+
+<div id="CP2"><b><input type="checkbox" id="pdisplay2" checked="true" /> Particle 3:</b>
+<table id="CPtable2" border="0" cellspacing="3">
+<tr><td align="right">Charge:</td><td><input type="text" id="charge2" value="0.1" size="5" /> mC</td></tr>
+<tr><td align="right">X:</td><td><input type="text" id="x2" value="500" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Y:</td><td><input type="text" id="y2" value="100" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Fixed:</td><td><input type="checkbox" id="fix2" /></td></tr>
+</table>
+</div>
+
+<div id="CP3"><b><input type="checkbox" id="pdisplay3" /> Particle 4:</b>
+<table id="CPtable3" border="0" cellspacing="3">
+<tr><td align="right">Charge:</td><td><input type="text" id="charge3" value="1.0" size="5" /> mC</td></tr>
+<tr><td align="right">X:</td><td><input type="text" id="x3" value="0" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Y:</td><td><input type="text" id="y3" value="0" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Fixed:</td><td><input type="checkbox" id="fix3" /></td></tr>
+</table>
+</div>
+
+<div id="CP4"><b><input type="checkbox" id="pdisplay4" checked="true" /> Particle 5:</b>
+<table id="CPtable4" border="0" cellspacing="3">
+<tr><td align="right">Charge:</td><td><input type="text" id="charge4" value="1.0" size="5" /> mC</td></tr>
+<tr><td align="right">X:</td><td><input type="text" id="x4" value="200" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Y:</td><td><input type="text" id="y4" value="100" size="5" /> cm<br /></td></tr>
+<tr><td align="right">Fixed:</td><td><input type="checkbox" id="fix4" checked="true" /></td></tr>
+</table>
+</div>
+
+<div id="CP5" style="text-align: center; padding: 15px 0 0 15px;">
+<input type="button" id="update" value="Update" onclick="updateParticles()" style="margin: 2px;" /><br />
+<input type="reset" id="reset" value="Reset" style="margin: 2px;" /><br />
+<input type="button" id="start" value="Start" onclick="startParticles()" style="margin: 2px;" /><br />
+<input type="button" id="stop" value="Stop" onclick="stopParticles()" style="margin: 2px;" /><br />
+</table>
+</div>
+
+</form>
+</div>
+
+<div id="background">
+
+<div id="particle0"></div>
+<div id="particle1"></div>
+<div id="particle2"></div>
+<div id="particle3"></div>
+<div id="particle4"></div>
+
+</div>
+
+</body>
+
+</html>

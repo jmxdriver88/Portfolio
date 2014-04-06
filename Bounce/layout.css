@@ -1,0 +1,69 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.controlPanel {
+	height: 100px;
+	width: 1000px;
+	z-index: 3;
+	margin: 0;
+	padding: 5px 0 0 36px;
+}
+
+.controlPanel span {
+	z-index: 3;
+	font: 10pt Georgia;
+	margin: 0px;
+	padding: 10px 15px 10px 15px;
+	display: block;
+	float: left;
+}
+
+#background {
+	background: #303030 url(background.png) no-repeat top left;
+	width: 1000px;
+	height: 400px;
+	position: absolute;
+	top: 100px;
+	left: 0px;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+}
+
+#ball {
+	background: url(ball.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 75px;
+	left: 50px;
+	z-index: 2;
+	margin: 0;
+	padding: 0;
+}
+
+#reflection {
+	background: url(reflection.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 425px;
+	left: 50px;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+}
+
+.wall {
+	background: white url(wall.png) no-repeat top left;
+	height: 50px;
+	width: 1000px;
+	position: absolute;
+	top: 500px;
+	left: 0px;
+	z-index: 3;
+	margin: 0;
+	padding: 0;
+}

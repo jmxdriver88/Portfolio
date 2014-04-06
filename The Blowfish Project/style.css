@@ -1,0 +1,102 @@
+body {
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+#container {
+	margin: 50px auto 40px auto;
+	padding: 0;
+	width: 550px;
+	text-align: left;
+}
+
+h1 {
+	color: #7f9db9;
+	font: bold small-caps 1.5em "Agency FB", Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	margin: 0;
+	padding: 20px 0 0 30px;
+}
+
+p {
+	color: Gray;
+	font: .9em Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	margin: -5px 0 15px 0;
+	padding: 5px;
+	border-top: 1px solid #7f9db9;
+}
+
+.method {
+	color: #404040;
+	font: .9em Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	padding: 0;
+	margin: 0 0 20px 0;
+}
+
+.method input {
+	margin: 0 0 0 30px;
+}
+
+.key {
+	color: #404040;
+	font: .9em Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	margin: 0;
+}
+
+.key input {
+	font: .9em "Courier New", Courier, monospace;
+	padding: 1px;
+	margin-top: 1px;
+}
+
+#strongKey {
+	margin: 0 0 20px 0;
+}
+
+#info {
+	font: bold .7em Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+}
+
+#meter {
+	padding: 0;
+	margin: 3px 0 0 0;
+	height: .3em;
+	overflow: hidden;
+	width: 4.9em;
+	background: Red;
+}
+
+.data {
+	color: #404040;
+	font: .9em Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	padding: 0;
+	margin: 0 0 20px 0;
+}
+
+#typeIn input {
+	padding: 1px;
+}
+
+#file In {
+	padding: 20px;
+}
+
+#fileIn input {
+	font: .9em "Courier New", Courier, monospace;
+	padding: 1px;
+	margin-top: 1px;
+}
+
+.output {
+	color: #404040;
+	font: .9em Arial, Verdana, Trebuchet, Helvetica, Sans-serif;
+	padding: 0;
+}
+
+.output b {
+	color: #7f9db9;
+}
+
+.output a {
+	color: red;;
+}

@@ -1,0 +1,5 @@
+ABSTRACT: Particle is a program I wrote to emulate the two-dimensional  electrostatic particle motion among up to five particles, given initial variables such as the charge (negative or positive), the x and y coordinates of each particle, and whether or not each particle is fixed or free to move.
+
+STARTING FILE: index.html
+
+USE: Program use is simple and fairly self-explanatory: Fill in the labeled fields with values you want. For a particle to be active in the animation, you must check the box beside its name (if you don’t want some of the particles in the animation, leave their boxes unchecked) Once you have everything set, click Start and watch the drama unfold. Stop does what you would expect it to do. Reset fills the fields with their initial values. NOTE: whenever you change values in any field, you MUST click the Update button to have your changes realized.

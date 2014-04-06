@@ -1,0 +1,171 @@
+<html>
+
+<head>
+<title>Ball Bouncing - Physics</title>
+
+<script type="text/javascript" language="JavaScript">
+
+var currentlyBouncing = false;
+var frameRate = 15;
+var backX;
+var a;
+var h;
+var v;
+var e;
+var timer;
+
+function setHorizontal()
+{
+    if( document.forms.f.v.value < 0 )
+        document.forms.f.v.value = "0.0";
+}
+
+function setEnergy()
+{
+    if( document.forms.f.e.value < 0 )
+        document.forms.f.e.value = "0.0";
+}
+
+function setAcceleration()
+{
+    document.forms.f.a.value = Math.abs( document.forms.f.a.value );
+}
+
+function setBall()
+{
+    var ball = document.getElementById( "ball" );
+    var reflection = document.getElementById( "reflection" );
+
+    if( document.forms.f.h.value < 0 )
+        document.forms.f.h.value = "0.0";
+
+    if( document.forms.f.h.value > 6.5 )
+        document.forms.f.h.value = 6.5;
+
+    if( currentlyBouncing == false )
+    {
+        ball.style.left = 50;
+        ball.style.top = 325 - ( document.forms.f.h.value * 50 );
+
+        reflection.style.left = 50;
+
+        if( document.forms.f.h.value * 50 > 80 )
+            reflection.style.top = 425;
+
+        else
+            reflection.style.top = 345 + ( document.forms.f.h.value * 50 );
+    }
+}
+
+function throwBall()
+{
+    a = document.forms.f.a.value * 1.5; // make things more life-like. ( shhhhh, don't tell anyone!! : )
+    h = document.forms.f.h.value;
+    v = document.forms.f.v.value * 1.5; // make things more life-like. ( shhhhh, don't tell anyone!! : )
+    e = document.forms.f.e.value / 100;
+
+    currentlyBouncing = true;
+    var groundSpeed = Math.sqrt( 2 * a * h );
+    var nextBounce = Math.sqrt( ( 2 * h ) / a ) * 1000;
+    backX = ( nextBounce / 1000 ) * v * 50;
+
+    theMachine( nextBounce, groundSpeed, nextBounce * 2, 0 );
+}
+
+function stopBall()
+{
+    clearTimeout( timer );
+    
+    ball = ( navigator.appName == "Microsoft Internet Explorer" ) ? document.ball : document.getElementById( "ball" );
+    reflection = ( navigator.appName == "Microsoft Internet Explorer" ) ? document.reflection : document.getElementById( "reflection" );
+
+    ball.style.left = 50;
+    ball.style.top = 325 - ( h * 50 );
+
+    reflection.style.left = 50;
+
+    if( h * 50 > 80 )
+        reflection.style.top = 425;
+
+    else
+        reflection.style.top = 345 + ( h * 50 );
+
+    currentlyBouncing = false;
+}
+
+function theMachine( time, groundSpeed, nextBounce, previousBounce )
+{
+    ball = document.getElementById( "ball" );
+    reflection = document.getElementById( "reflection" );
+
+    timeS = ( time - previousBounce ) / 1000;
+
+    if( time >= nextBounce )
+    {
+        groundSpeed *= e;
+        var ballX = ( v * time / 20 ) + 50 - backX; 
+        var ballY = 0;
+
+        previousBounce = nextBounce;
+        nextBounce += ( ( 2 * groundSpeed ) / a ) * 1000;
+    }
+
+    else
+    {
+        var ballX = ( v * time / 20 ) + 50 - backX; 
+        var ballY = ( groundSpeed * ( timeS ) ) - ( ( a * timeS * timeS ) / 2 );
+    }
+
+    if( ballX >= 975 )
+    {
+        stopBall();
+        return;
+    }
+
+    ball.style.left = ballX;
+    ball.style.top = 325 - ( ballY * 50 );
+
+    reflection.style.left = ballX;
+    reflection.style.top = ( ballY * 50 > 80 ) ? 425 : 345 + ballY * 50;
+
+    var nextFunction = function(){ theMachine( time + frameRate, groundSpeed, nextBounce, previousBounce ); };
+    timer = setTimeout( nextFunction, frameRate );
+}
+
+</script>
+
+<link href="layout.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+
+<div class="controlPanel">
+<form name="f" method="post" action="">
+<span><nobr>Acceleration due to gravity: <input type="text" name="a" value="9.81" size="5" onchange="setAcceleration()" /> m/sec<sup>2</sup></nobr></span>
+
+<span><nobr>Horizontal velocity: <input type="text" name="v" value="2.0" size="5" onchange="setHorizontal()" /> m/sec</nobr></span>
+
+<span><nobr>Initial height: <input type="text" name="h" value="5.0" size="5" onchange="setBall()" /> m</nobr></span><br />
+
+<span><nobr>Energy Retention (percent of energy ball retains after each bounce): <input type="text" name="e" value="90" size="5" onchange="setEnergy()" /> %</nobr></span>
+
+<span><nobr><input type="button" name="start" value="Start" onclick="throwBall()" /></nobr></span>
+
+<span><nobr><input type="button" name="stop" value="Stop" onclick="stopBall()" /></nobr></span>
+
+<span><nobr><input type="reset" name="reset" value="Reset" /></nobr></span>
+</form>
+</div>
+
+<div id="background">
+
+<div id="ball"></div>
+<div id="reflection"></div>
+
+</div>
+
+<div class="wall"></div>
+
+</body>
+
+</html>

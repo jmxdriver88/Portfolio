@@ -1,0 +1,13 @@
+write hello world
+variable name !hello world
+write !name
+add 56 73
+variable num_holder 540
+multiply !num_holder .5
+squareroot 40
+info
+date
+hour
+minute
+second
+timestamp

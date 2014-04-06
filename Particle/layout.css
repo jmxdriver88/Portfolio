@@ -1,0 +1,104 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.controlPanel {
+	height: 150px;
+	width: 1000px;
+	z-index: 10;
+	margin: 0;
+	padding: 5px 0 0 25px;
+}
+
+.controlPanel div {
+	z-index: 11;
+	font: 10pt Georgia;
+	margin: 0px;
+	padding: 10px 10px 10px 10px;
+	display: block;
+	float: left;
+
+}
+
+.controlPanel div b {
+	margin-left: 35px;
+
+}
+
+.controlPanel div table {
+	font: 10pt Georgia;
+}
+
+#background {
+	background: #303030;
+	width: 1000px;
+	height: 600px;
+	position: absolute;
+	top: 150px;
+	left: 0px;
+	z-index: 1;
+	margin: 0;
+	padding: 0;
+}
+
+#particle0 {
+	background: url(particle1.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 187px;
+	left: 187px;
+	z-index: 2;
+	margin: 0;
+	padding: 0;
+}
+
+#particle1 {
+	background: url(particle2.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 187px;
+	left: 387px;
+	z-index: 3;
+	margin: 0;
+	padding: 0;
+}
+
+#particle2 {
+	background: url(particle3.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 87px;
+	left: 487px;
+	z-index: 4;
+	margin: 0;
+	padding: 0;
+}
+
+#particle3 {
+	background: url(particle4.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: -13px;
+	left: -13px;
+	z-index: 5;
+	margin: 0;
+	padding: 0;
+	display: none;
+}
+
+#particle4 {
+	background: url(particle5.png) no-repeat top left;
+	width: 25px;
+	height: 25px;
+	position: absolute;
+	top: 87px;
+	left: 187px;
+	z-index: 6;
+	margin: 0;
+	padding: 0;
+}

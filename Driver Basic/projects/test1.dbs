@@ -1,0 +1,3 @@
+write hello world
+variable name !hello world
+write !name
